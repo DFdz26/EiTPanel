@@ -55,11 +55,11 @@ def check_len_list_task():
 
 def add_point_wrapper(dic):
     station = dic["station"]
-    substation = dic["station"]
+    substation = int(dic["substation"])
     wait_ = dic["wait"]
 
     if DEBUG:
-        print(f"Moving the robot to the station '{station}' substation '{substation}")
+        print(f"Moving the robot to the station '{station}' substation '{substation}'")
 
     if CONNECT_MiR:
         derobot.move_to_assemblystation(station)
@@ -75,6 +75,10 @@ def add_point_wrapper(dic):
             print("Condition received")
 
     if 1 == check_len_list_task():
+
+        if DEBUG:
+            print("Move_home_wrapper added")
+
         with taskManager["lock"]:
             helper_dict = {
                 "fun": move_home_wrapper,
@@ -116,6 +120,9 @@ def move_warehouse_wrapper(dic):
 def move_home_wrapper(dic):
     wait_ = dic["wait"]
 
+    if DEBUG:
+        print("Moving robot to home")
+
     if CONNECT_MiR:
         derobot.move_to_home()
 
@@ -135,7 +142,8 @@ def check_program_started():
     started = False
 
     if check_len_list_task():
-        started = move_home_wrapper == taskManager["list"][0] or move_warehouse_wrapper == taskManager["list"][0]
+        started = move_home_wrapper == taskManager["list"][0]["fun"] or \
+                  move_warehouse_wrapper == taskManager["list"][0]["fun"]
 
     if not started:
         started = event_program_started.is_set()
@@ -145,7 +153,7 @@ def check_program_started():
 
 def taskHandler():
 
-    while event_stop_prog.is_set():
+    while not event_stop_prog.is_set():
 
         if check_program_started():
             taskManager["list"][0]["fun"](taskManager["list"][0]["args"])
@@ -247,7 +255,7 @@ def add_point():
 @app.route('/req', methods=['POST'])
 def req_MiR():
     req_station = int(request.args.get('place'))
-    final = bool(request.args.get('final'))
+    final = int(request.args.get('final'))
 
     status = 419
     message_resp = f"The station '{req_station}' is not inside of the options, only the station 0 (warehouse) " \
