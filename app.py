@@ -115,8 +115,6 @@ def req_robot():
     process = copy.copy(r.args["dir"])
     final = 1 if "final" in r.args else 0
 
-    print(final)
-
     thread = threading.Thread(target=request_mir, args=(process, final))
     thread.start()
 

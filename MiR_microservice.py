@@ -32,12 +32,7 @@ taskManager = {
 
 event_stop_prog = threading.Event()
 
-
 event_program_started = threading.Event()
-# program_started = {
-#     "Value": False,
-#     "Lock": threading.Lock()
-# }
 
 # initialize MiR communication
 mirinterface = MIR(auth_file=auth_file_dir)
