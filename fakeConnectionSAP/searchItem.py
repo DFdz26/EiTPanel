@@ -8,7 +8,7 @@ def search_item(id_item, db_uri) -> list:
     Search an item in the DB by its id and returns a list of the assembly lines that this item should go.
 
     Args:
-        id_item (int): The id of the item
+        id_item (str): The id of the item
         db_uri (str): The uri where the DB is located.
     """
 

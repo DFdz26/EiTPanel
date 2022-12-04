@@ -1,0 +1,3 @@
+[submodule "EiT_integration"]
+	path = EiT_integration
+	url = https://github.com/Arthicha/EiT-Integration

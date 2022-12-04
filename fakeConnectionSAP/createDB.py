@@ -11,13 +11,10 @@ def createFakeDB(verbose=True):
     """
 
     items = [
-        {"Id": 19092, "Lines": [1, 2]},
-        {"Id": 8721, "Lines": [2]},
-        {"Id": 9821, "Lines": [1, 3]},
-        {"Id": 1234, "Lines": [5]},
-        {"Id": 9812, "Lines": [3]},
-        {"Id": 3621, "Lines": [1]},
-        {"Id": 2061, "Lines": [4]},
+        {"Id": "4465441", "Lines": [3]},
+        {"Id": "602173", "Lines": [1]},
+        {"Id": "4320058", "Lines": [3]},
+        {"Id": "9320058", "Lines": [1, 2]},
     ]
 
     stored_items = []
@@ -30,7 +27,7 @@ def createFakeDB(verbose=True):
     connection = sqlite3.connect(DB_NAME)
     cursor = connection.cursor()
 
-    cursor.execute(f"CREATE TABLE IF NOT EXISTS {ITEM_TABLE_NAME} ({FIELD_ID} integer PRIMARY KEY NOT NULL, {FIELD_LINES} text)")
+    cursor.execute(f"CREATE TABLE IF NOT EXISTS {ITEM_TABLE_NAME} ({FIELD_ID} text, {FIELD_LINES} text)")
     cursor.executemany(f"insert into {ITEM_TABLE_NAME} values (?, ?)", stored_items)
 
     # print the database
