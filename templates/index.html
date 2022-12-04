@@ -1,47 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=en>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
-    <script src="../js/screenCapture.js"></script>
-    <title>MiR </title>
+    <title>EIR6 app</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
 </head>
 <body>
-    <section class="leftLateral">
+    <section class="topbar">
+        <img id="logo" src="./static/imgs/hydac-logo.svg" alt="Hydac logo">
     </section>
-    <section class="main">
-        <section class="upBar">
-            <img id="logo" src="../img/hydac-logo.svg" alt="hydac logo" />
-        </section>
-    
-        <section class="center"> 
-            <section class="title">
-                <h2> MiR control </h2>
-            </section>
-            
-            <section class="selections"> 
-                <a href="#" class="btn Scan">Scan Barcode</a>
-    
-                <a href="#" class="btn Introduce">Introduce Barcode</a>
-    
-                <a href="#" class="btn Move">Move the robot</a>
-            </section>
-
-            <div class="camera">
-                <video id="video">Video stream not available.</video>
-                <button id="takephoto">Take photo</button>
-            </div>
-    
-        
-        </section>
-        <section class="downBar">
-            <img src="../img/descarga.jpg" width="200" height="200">
-    
-        </section>
-    </section>
-    <section class="rightLateral">
-    </section>
+    <nav class="nav">
+        <a href="/" class="nav__link" data-link>Send</a>
+        <a href="/receive" class="nav__link" data-link>Receive</a>
+        <a href="/status" class="nav__link" data-link>Status</a>
+    </nav>
+    <div id="app"></div>
+    <script type="module" src="/static/js/index.js"></script>
 </body>
 </html>

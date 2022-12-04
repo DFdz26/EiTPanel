@@ -1,4 +1,6 @@
-from flask import Flask, request, Response
+import os
+
+from flask import Flask, request, Response, render_template
 import numpy as np
 import cv2
 import jsonpickle
@@ -76,7 +78,7 @@ def process_img(received):
 
 @app.route('/')
 def hello_world():  # put application's code here
-    return 'Hello World!'
+    return render_template('index.html')
 
 
 @app.route('/picture', methods=['PUT'])
