@@ -8,7 +8,7 @@ addr = 'http://localhost:5500'
 
 def send_img():
     test_url = addr + '/picture'
-    photo = "img/test8.jpg"
+    photo = "test/test8.jpg"
 
     # prepare headers for http request
     content_type = 'image/jpeg'
