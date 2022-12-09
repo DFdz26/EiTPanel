@@ -1,6 +1,7 @@
 import Send from "./views/Send.js";
 import Receive from "./views/Receive.js";
 import Status from "./views/Status.js";
+import Scan from "./views/Scan.js";
 
 const navigateTo = url => {
     history.pushState(null, null, url);
@@ -12,6 +13,7 @@ const router = async () => {
         { path: "/", view: Send },
         { path: "/receive", view: Receive },
         { path: "/status", view: Status },
+        { path: "/scan", view: Scan},
     ];
 
     //Test each route for potential matches
