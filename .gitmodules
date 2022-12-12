@@ -1,3 +1,11 @@
 [submodule "EiT_integration"]
 	path = EiT_integration
 	url = https://github.com/Arthicha/EiT-Integration
+
+[submodule "BarCoddunication"]
+	path = EiT_integration/BarCoddunication
+	url = https://github.com/Arthicha/Barcode_Detection_and_Decoding.git
+
+[submodule "MiRCommunication"]
+	path = EiT_integration/MiRCommunication
+	url = https://github.com/DFdz26/MiRCommunication.git

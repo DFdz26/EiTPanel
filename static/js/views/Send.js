@@ -10,15 +10,13 @@ export default class extends AbstractView {
         return `
             <section class="center"> 
             <section class="title">
-                <h2> MiR control </h2>
+                <h2> New Delivery </h2>
             </section>
             
             <section class="selections"> 
-                <a href="#" class="btn Scan">Scan Barcode</a>
-        
-                <a href="#" class="btn Introduce">Introduce Barcode</a>
-        
-                <a href="#" class="btn Move">Move the robot</a>
+                <a href="/req_robot" class="btn Introduce">Call robot</a>
+                <a href="/scan_barcode" class="btn Introduce">Scan barcode</a>
+                <a href="/start_mission" class="btn Move">Start mission</a>
             </section>
         `;
     }

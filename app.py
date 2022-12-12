@@ -10,6 +10,7 @@ import copy
 import fakeConnectionSAP as DBConnection
 import EiT_integration.BarCoddunication.barcode_reader as barcode_reader
 import requests
+from werkzeug.routing import Rule
 
 DEBUG = True
 CONNECT_MiR = True
@@ -65,6 +66,12 @@ def process_img(received):
 
     places = DBConnection.search_item(str(code)[2:-1], DBConnection.DB_NAME)
 
+    #to do: closed loop error handling 
+    if (places is None):
+        if DEBUG:
+            print(f"no barcode in the picture")
+        return
+
     if DEBUG:
         print(f"The robot should go to the place: {places[0]}")
 
@@ -81,19 +88,24 @@ def hello_world():  # put application's code here
     return render_template('index.html')
 
 
+@app.route('/scan_barcode', methods=['GET', 'POST'])
+def scan_barcode():  # put application's code here
+    return render_template('camera.html')
+
+
 @app.route('/picture', methods=['PUT'])
 def receive_b64_img():
+    
+    if DEBUG:
+        print(f"data: {request.data}")
+
     r = request
     process = copy.copy(r.data)
 
     thread = threading.Thread(target=process_img, args=(process, ))
     thread.start()
 
-    response = {'message': 'image received.'}
-
-    response_pickled = jsonpickle.encode(response)
-
-    return Response(response=response_pickled, status=200, mimetype="application/json")
+    return render_template('camera.html')
 
 
 @app.route('/state', methods=['POST'])
@@ -111,21 +123,58 @@ def change_queue_state():
     return Response(response=response_pickled, status=200, mimetype="application/json")
 
 
-@app.route('/req_robot', methods=['POST'])
+@app.route('/req_robot', methods=['GET', 'POST'])
 def req_robot():
     r = request
-    process = copy.copy(r.args["dir"])
-    final = 1 if "final" in r.args else 0
+    process = 0 #request to warehouse
+    final = 0 #move to warehouse request
 
     thread = threading.Thread(target=request_mir, args=(process, final))
     thread.start()
+    return render_template('index.html')
 
-    response = {'message': 'Order received.'}
 
-    response_pickled = jsonpickle.encode(response)
+@app.route('/start_mission', methods=['GET', 'POST'])
+def start_mission():
+    r = request
+    process = 1 #start the mission
 
-    return Response(response=response_pickled, status=200, mimetype="application/json")
+    thread = threading.Thread(target=change_mir_queue, args=(process,))
+    thread.start()
+    return render_template('index.html')
+
+
+@app.route('/continue_mission', methods=['GET', 'POST'])
+def continue_mission():
+    r = request
+    process = 2 #continue the mission. Triggered by confirm pickup button.
+
+    thread = threading.Thread(target=change_mir_queue, args=(process,))
+    thread.start()
+    return render_template('index.html')
+
+
+@app.route('/return_warehouse', methods=['GET', 'POST'])
+def return_warehouse():
+    r = request
+    process = 0 #request to warehouse
+    final = 1 #return to warehouse request
+
+    thread = threading.Thread(target=request_mir, args=(process, final))
+    thread.start()
+    return render_template('index.html')
+
+
+#this fixes disappearing app after refresh
+@app.endpoint("catch_all")
+def _404(_404):
+    return render_template('index.html')
+
+app.url_map.add(Rule("/", defaults={"_404": ""}, endpoint="catch_all"))
+app.url_map.add(Rule("/<path:_404>", endpoint="catch_all"))
 
 
 if __name__ == '__main__':
-    app.run(host="localhost", port=5500, debug=True)
+    app.secret_key = 'super secret key'
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.run(host="0.0.0.0", port=5500, debug=True)

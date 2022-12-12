@@ -13,10 +13,10 @@ export default class extends AbstractView {
                     <h2> Mission status </h2>
                 </section>
                 <p>
-                    Maybe we will do, maybe not xD
+                    Possibility to display mission status and current robot's position in the future
                 </p>
                 <p>
-                    <a href="/" data-link>New mission</a>.
+                    <a href="/" class="btn Introduce" data-link>New mission</a>
                 </p>
             </section>
         `;

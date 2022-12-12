@@ -10,11 +10,16 @@ export default class extends AbstractView {
         return `
             <section class="center"> 
             <section class="title">
-                <h2> Load control </h2>
+                <h2> Mission Control </h2>
             </section>
+
+            <p>
+                After pickup choose next goal
+            </p>
             
             <section class="selections"> 
-                <a href="#" class="btn Scan">Confirm Pickup</a>
+                <a href="/continue_mission" class="btn Introduce">Next Station</a>
+                <a href="/continue_mission" class="btn Introduce">Warehouse</a>
             </section>
         `;
     }
