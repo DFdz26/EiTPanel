@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Scanner</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+</head>
+<body>
+    <section class="topbar">
+        <a href="/" ><label><img src="./static/imgs/hydac-logo.svg" alt="Hydac logo" /></label></a>
+    </section>
+    <nav class="nav">
+        <a href="/" class="nav__link">Send</a>
+        <a href="/receive" class="nav__link">Receive</a>
+        <a href="/status" class="nav__link">Status</a>
+    </nav>
+
+    <div id="app">
+        <input type="file" name="file" id="image-input" accept="image/*" capture="environment">
+        <div id="display-image"></div>
+        <a href="/scan_barcode" class="btn Introduce">Confirm Barcode</a>
+        <a href="/" class="btn Introduce" data-link>Finish Scanning</a>
+    </div>    
+
+    <script src="/static/js/camera.js"></script>
+</body>
+</html>

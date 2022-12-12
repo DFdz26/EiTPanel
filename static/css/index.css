@@ -51,7 +51,8 @@ body {
 #app {
     max-width: 300px;
     position: relative;
-    bottom: 10%;
+    top: 0%;
+    bottom: 8%;
     margin: auto;
     text-align: center;
     width: 100%;
@@ -137,4 +138,13 @@ a.btn:after {
 
 a {
     color: #009579;
+}
+
+#display-image{
+    width: 300px;
+    height: 211px;
+    margin-top: 20px;
+    border: 2px solid #333;
+    background-position: center;
+    background-size: cover;
 }
