@@ -154,11 +154,20 @@ def continue_mission():
     return render_template('index.html')
 
 
-@app.route('/return_warehouse', methods=['GET', 'POST'])
-def return_warehouse():
+@app.route('/cancel', methods=['GET', 'POST'])
+def cancel():
     r = request
-    process = 0 #request to warehouse
-    final = 1 #return to warehouse request
+    process = 0 #cancel the mission. Triggered by cancel button.
+
+    thread = threading.Thread(target=change_mir_queue, args=(process,))
+    thread.start()
+    return render_template('index.html')
+
+@app.route('/go_home', methods=['GET', 'POST'])
+def go_home():
+    r = request
+    process = 1 #go home
+    final = 1 #charging
 
     thread = threading.Thread(target=request_mir, args=(process, final))
     thread.start()

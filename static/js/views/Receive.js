@@ -19,7 +19,8 @@ export default class extends AbstractView {
             
             <section class="selections"> 
                 <a href="/continue_mission" class="btn Introduce">Next Station</a>
-                <a href="/continue_mission" class="btn Introduce">Warehouse</a>
+                <a href="/go_home" class="btn Introduce">Go Charging</a>
+                <a href="/cancel" class="btn Introduce">Cancel Mission</a>
             </section>
         `;
     }
