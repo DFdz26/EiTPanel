@@ -72,11 +72,11 @@ def add_point_wrapper(dic):
     if 1 == check_len_list_task():
 
         if DEBUG:
-            print("Move_home_wrapper added")
+            print("Move_warehouse_wrapper added")
 
         with taskManager["lock"]:
             helper_dict = {
-                "fun": move_home_wrapper,
+                "fun": move_warehouse_wrapper,
                 "args": {
                     "wait": False,
                     "final": True
@@ -204,6 +204,7 @@ def continue_queue():
 
     if event_program_started.is_set():
         taskManager["condition"].set()
+        taskManager["condition"].clear()
 
         success = True
         message = ""
@@ -258,11 +259,26 @@ def req_MiR():
 
     if req_station == 0:
         status = 201
-        message_resp = "Requested MiR."
+        message_resp = "Requested MiR to warehouse."
 
         with taskManager["lock"]:
             helper_dict = {
                 "fun": move_warehouse_wrapper,
+                "args": {
+                    "wait": False,
+                    "final": final
+                }
+            }
+
+            taskManager["list"].append(helper_dict)
+
+    if req_station == 1:
+        status = 201
+        message_resp = "Requested MiR to charge."
+
+        with taskManager["lock"]:
+            helper_dict = {
+                "fun": move_home_wrapper,
                 "args": {
                     "wait": False,
                     "final": final
@@ -299,6 +315,7 @@ def change_queue_state():
 
     if DEBUG:
         print(message_resp)
+        print(f"status in queue: {status}")
 
     response = {'message': message_resp}
 
@@ -320,12 +337,16 @@ if __name__ == "__main__":
         thread.start()
         app.run(host=MiR_microservice_ip, port=MiR_microservice_port, debug=False)
     except KeyboardInterrupt:
+        if DEBUG:
+            print(f"keybord intterrupt condition set")
         event_stop_prog.set()
         taskManager["condition"].set()
 
         if thread is not None:
             thread.join()
     finally:
+        if DEBUG:
+            print(f"main finally condition set")
         event_stop_prog.set()
         taskManager["condition"].set()
 
