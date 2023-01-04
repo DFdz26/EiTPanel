@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from fakeConnectionSAP.constants import FIELD_ID, FIELD_LINES, ITEM_TABLE_NAME, DB_NAME
+from constants import FIELD_ID, FIELD_LINES, ITEM_TABLE_NAME, DB_NAME
 
 
 def createFakeDB(verbose=True):
@@ -12,8 +12,10 @@ def createFakeDB(verbose=True):
 
     items = [
         {"Id": "4465441", "Lines": [3]},
-        {"Id": "602173", "Lines": [1]},
-        {"Id": "4320058", "Lines": [3]},
+        {"Id": "602173", "Lines": [2]},
+        {"Id": "4320058", "Lines": [1]},
+        {"Id": "POSIT1", "Lines": [1]},
+        {"Id": "POSIT2", "Lines": [3]},
         {"Id": "9320058", "Lines": [1, 2]},
     ]
 
